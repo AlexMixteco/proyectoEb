@@ -1,0 +1,13 @@
+/*@import './base.css';*/
+
+@import "tailwindcss";
+
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Puedes poner esto en src/assets/main.css o en tu archivo global de estilos */
+body, label, input, select, textarea, h2 {
+  font-family: 'Inter', sans-serif;
+}
+
+

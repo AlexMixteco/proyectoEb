@@ -1,0 +1,240 @@
+<template>
+  <div class="flex items-start justify-center min-h-screen bg-gray-100 p-4">
+    <form
+      class="w-full mt-8 mx-20 bg-white p-8 rounded-lg shadow-md"
+      @submit.prevent="insertarCliente"
+    >
+      <!-- Título -->
+      <div class="flex justify-center w-full mb-6">
+        <h1 class="text-5xl font-bold text-gray-800 text-center font-[Inter]">
+          Agregar cliente
+        </h1>
+      </div>
+
+      <!-- Primera fila -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Nombre de la empresa
+          </label>
+          <input
+            v-model="form.nombreEmpresa"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Impresión
+          </label>
+          <input
+            v-model="form.impresion"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+      </div>
+
+      <!-- Segunda fila -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3 mt-4">
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Correo electrónico
+          </label>
+          <input
+            v-model="form.email"
+            type="email"
+            required
+            maxlength="50"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Teléfono
+          </label>
+          <input
+            v-model="form.telefono"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+      </div>
+
+      <!-- Datos fiscales -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3 mt-4">
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Razón social
+          </label>
+          <input
+            v-model="form.razonSocial"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            RFC
+          </label>
+          <input
+            v-model="form.rfc"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          />
+        </div>
+
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Régimen fiscal
+          </label>
+          <select
+            required
+            v-model="form.regimen"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          >
+            <option value="">Selecciona un régimen</option>
+            <option value="605-Sueldos y Salarios e Ingresos Asimilados a Salarios">Sueldos y Salarios e Ingresos Asimilados a Salarios</option>
+            <option value="606-Arrendamiento">Arrendamiento</option>
+            <option value="607-Enajenación o Adquisición de Bienes">Enajenación o Adquisición de Bienes</option>
+            <option value="608-Demás Ingresos">Demás Ingresos</option>
+            <option value="612-Actividades Empresariales y Profesionales">Actividades Empresariales y Profesionales</option>
+            <option value="614-Ingresos por Intereses">Ingresos por Intereses</option>
+            <option value="616-Sin Obligaciones Fiscales">Sin Obligaciones Fiscales</option>
+            <option value="621-Incorporación Fiscal">Incorporación Fiscal</option>
+            <option value="622-Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras">Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras</option>
+            <option value="623-Opcional para Grupos de Sociedades">Opcional para Grupos de Sociedades</option>
+            <option value="624-Coordinados">Coordinados</option>
+            <option value="625-Actividades con Ingresos por Plataformas Tecnológicas">Actividades con Ingresos por Plataformas Tecnológicas</option>
+            <option value="601-Ley general de personas morales">Ley general de personas morales</option>
+            <option value="603-Personas Morales con Fines no Lucrativos">Personas Morales con Fines no Lucrativos</option>
+          </select>
+        </div>
+
+        <!-- CFDI con value combinado -->
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            CFDI
+          </label>
+          <select
+            required
+            v-model="form.cfdi"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
+          >
+            <option value="">Selecciona un CFDI</option>
+            <option value="G01-Adquisición de mercancias">Adquisición de mercancias</option>
+            <option value="G03-Gastos en general">Gastos en general</option>
+            <option value="S01-Sin efectos fiscales">Sin efectos fiscales</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dirección -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3 mt-4">
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Estado
+          </label>
+          <input v-model="form.estado" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Colonia
+          </label>
+          <input v-model="form.colonia" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            C.p.
+          </label>
+          <input v-model="form.cp" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+      </div>
+
+      <!-- Calle -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3 mt-4">
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Calle
+          </label>
+          <input v-model="form.calle" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Núm. exterior
+          </label>
+          <input v-model="form.numeroExterior" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+
+        <div class="sm:col-span-1">
+          <label class="block text-gray-700 text-sm font-bold mb-2 font-[Inter]">
+            Núm. interior
+          </label>
+          <input v-model="form.numeroInterior" type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]" />
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button
+          class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          type="submit"
+        >
+          Insertar
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+const router = useRouter()
+
+const form = reactive({
+  nombreEmpresa: '',
+  impresion: '',
+  razonSocial: '',
+  rfc: '',
+  email: '',
+  telefono: '',
+  regimen: '',
+  cfdi: '',
+  estado: '',
+  colonia: '',
+  cp: '',
+  calle: '',
+  numeroExterior: '',
+  numeroInterior: ''
+})
+
+const insertarCliente = async () => {
+  try {
+    const response = await axios.post(' https://apisprueba.onrender.com/api/clientes/insertar', form)
+    console.log(response.data)
+    Object.keys(form).forEach(key => form[key] = '')
+    alert('Cliente insertado correctamente')
+    router.push('/clientes')
+  } catch (error) {
+    console.error('Error al insertar cliente', error)
+    alert('Error al insertar cliente')
+  }
+}
+</script>
+
