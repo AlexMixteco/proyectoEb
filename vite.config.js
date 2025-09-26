@@ -16,7 +16,7 @@ export default defineConfig({
   preview: {
     host: true,
     port: 8080,
-    allowedHostsallowedHosts: ['proyectoeb.onrender.com']
+    allowedHosts: ['proyectoeb.onrender.com']
   },
   resolve: {
     alias: {
