@@ -14,8 +14,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   preview: {
-    host: 'true',
-    port: 8080,
+    host: true,
+    port: 3000,
   },
   resolve: {
     alias: {
