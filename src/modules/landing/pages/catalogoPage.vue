@@ -94,7 +94,7 @@ const loading = ref(true)
 // 🔹 Traer todos los productos desde la API
 onMounted(async () => {
   try {
-    const { data } = await axios.get('http://localhost:3000/api/producto/catalogo')
+    const { data } = await axios.get('https://apisprueba-s4hw.onrender.com/api/producto/catalogo')
     productos.value = data
     console.log('Productos cargados:', productos.value)
   } catch (error) {
@@ -131,7 +131,7 @@ const eliminarProducto = async (identificador) => {
     return
   }
   try {
-    await axios.delete(`http://localhost:3000/api/productos/${identificador}`)
+    await axios.delete(`https://apisprueba-s4hw.onrender.com/api/productos/${identificador}`)
     productos.value = productos.value.filter((p) => p.identificador !== identificador)
     console.log('Producto eliminado:', identificador)
   } catch (error) {

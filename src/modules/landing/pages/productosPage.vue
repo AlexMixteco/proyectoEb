@@ -603,7 +603,7 @@ async function insertarProducto() {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/productos/insertar',
+      'https://apisprueba-s4hw.onrender.com/api/productos/insertar',
       formData,
       { headers: { 'Content-Type': 'multipart/form-data' } }
     );
@@ -647,7 +647,7 @@ const closeModal = () => {
 
 const guardarTinta = async () => {
   try {
-    const res = await axios.post('http://localhost:3000/api/tintas/insertar', {
+    const res = await axios.post('https://apisprueba-s4hw.onrender.com/api/tintas/insertar', {
       gcmi: gcmi.value,
       nombre_tinta: nombreTinta.value
     })
@@ -667,7 +667,7 @@ const guardarTinta = async () => {
 // Función para traer clientes
 const obtenerClientes = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/clientes')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/clientes')
     clientes.value = res.data
   } catch (error) {
     console.error('Error al obtener clientes:', error)
@@ -677,7 +677,7 @@ const obtenerClientes = async () => {
 
 const obtenerTintas = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/tintas')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/tintas')
     tintas.value = res.data
   } catch (error) {
     console.error('Error al obtener clientes:', error)
@@ -686,7 +686,7 @@ const obtenerTintas = async () => {
 
 const obtenerMateriales = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/materiales')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/materiales')
     materiales.value = res.data
     console.log('Materiales cargados:', materiales.value)
   } catch (error) {

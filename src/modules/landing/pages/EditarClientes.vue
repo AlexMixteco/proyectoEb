@@ -209,7 +209,7 @@ const form = reactive({
 const cargarCliente = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`http://localhost:3000/api/clientes/${id}`)
+    const res = await axios.get(`https://apisprueba-s4hw.onrender.com/api/clientes/${id}`)
 
     if (res.data && res.data.length > 0) {
       Object.assign(form, res.data[0])
@@ -225,7 +225,7 @@ const cargarCliente = async () => {
 
 const ActualizarCliente = async (json, num_cliente) => {
   try {
-    const res = await axios.put(`http://localhost:3000/api/clientes/actualizar/${num_cliente}`, json)
+    const res = await axios.put(`https://apisprueba-s4hw.onrender.com/api/clientes/actualizar/${num_cliente}`, json)
     console.log("Cliente actualizado:", res.data)
     alert("Cliente actualizado correctamente")
     router.push('/clientes')

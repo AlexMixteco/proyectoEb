@@ -223,7 +223,7 @@ const form = reactive({
 
 const insertarCliente = async () => {
   try {
-    const response = await axios.post('http://localhost:3000/api/clientes/insertar', form)
+    const response = await axios.post('https://apisprueba-s4hw.onrender.com/api/clientes/insertar', form)
     console.log(response.data)
     Object.keys(form).forEach(key => form[key] = '')
     alert('Cliente insertado correctamente')

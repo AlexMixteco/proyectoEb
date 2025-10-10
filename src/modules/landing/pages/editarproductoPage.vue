@@ -585,7 +585,7 @@ const closeModal = () => {
 
 const guardarTinta = async () => {
   try {
-    const res = await axios.post('http://localhost:3000/api/tintas/insertar', {
+    const res = await axios.post('https://apisprueba-s4hw.onrender.com/api/tintas/insertar', {
       gcmi: gcmi.value,
       nombre_tinta: nombreTinta.value
     })
@@ -607,7 +607,7 @@ const guardarTinta = async () => {
 const cargarProducto = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`http://localhost:3000/api/productos/${id}`)
+    const res = await axios.get(`https://apisprueba-s4hw.onrender.com/api/productos/${id}`)
 
     if (res.data && res.data.length > 0) {
       const producto = res.data[0]
@@ -631,7 +631,7 @@ const cargarProducto = async () => {
 // Obtener tintas
 const obtenerTintas = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/tintas')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/tintas')
     tintas.value = res.data
   } catch (error) {
     console.error('Error al obtener tintas:', error)
@@ -642,7 +642,7 @@ const obtenerTintas = async () => {
 const cargarProductoTintas = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`http://localhost:3000/api/productos/tintas/${id}`)
+    const res = await axios.get(`hhttps://apisprueba-s4hw.onrender.com/api/productos/tintas/${id}`)
     if (res.data && res.data.length > 0) {
       const tintasProducto = res.data.slice(0, 4)
       tinta1.value = tintasProducto[0]?.id_tinta || ''
@@ -710,7 +710,7 @@ const ActualizarProducto = async () => {
 // Obtener materiales
 const obtenerMateriales = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/materiales')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/materiales')
     materiales.value = res.data
   } catch (error) {
     console.error('Error al obtener materiales:', error)

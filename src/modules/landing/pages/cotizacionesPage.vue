@@ -602,7 +602,7 @@ const guardarMaterial = async () => {
     precio: precioModal.value,
   }
   try {
-    await axios.post('http://localhost:3000/api/materiales/insertar', nuevoMaterial)
+    await axios.post('https://apisprueba-s4hw.onrender.com/api/materiales/insertar', nuevoMaterial)
     materiales.value.push(nuevoMaterial)
 
     closeModal()
@@ -615,7 +615,7 @@ const guardarMaterial = async () => {
 
 const obtenerMateriales = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/materiales')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/materiales')
     materiales.value = res.data
     console.log('Materiales cargados:', materiales.value)
   } catch (error) {
@@ -625,7 +625,7 @@ const obtenerMateriales = async () => {
 
 const obtenerClientes = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/clientes')
+    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/clientes')
     clientes.value = res.data
   } catch (error) {
     console.error('Error al obtener clientes:', error)
