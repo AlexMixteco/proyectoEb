@@ -10,6 +10,7 @@ const router = createRouter({
     path: '/', name: 'landing', component: () => import('@/modules/landing/layouts/LandingLayout.vue'),
     children: [
     { path: '/', name: 'home', component: HomePage},
+    {path: '/cotizaciones', name: 'cotizaciones', component: () => import('@/modules/landing/pages/cotizacionesPage.vue')},
     {path: '/clientes', name: 'clientes', component: () => import('@/modules/landing/pages/clientesPage.vue')},
     {path: '/AgregarCliente', name: 'AgregarCliente', component: () => import('@/modules/landing/pages/AgregarClientes.vue')},
     {path: '/EditarCliente/:id', name: 'EditarCliente', component: () => import('@/modules/landing/pages/EditarClientes.vue')},
@@ -19,11 +20,7 @@ const router = createRouter({
     {path: '/pedidos', name: 'pedidos', component: () => import('@/modules/landing/pages/pedidosPage.vue')},
     {path: '/productos', name: 'productos', component: () => import('@/modules/landing/pages/productosPage.vue')},
     {path: '/catalogo', name: 'catalogo', component: () => import('@/modules/landing/pages/catalogoPage.vue')},
-    {
-          path: '/ordenP',
-          name: 'ordenP',
-          component: () => import('@/modules/landing/pages/ordenpPage.vue'),
-        },
+    {path: '/ordenP',name: 'ordenP',component: () => import('@/modules/landing/pages/ordenpPage.vue') },
     {path: '/editarProductos/:id',name: 'EditarProducto',component: () => import('@/modules/landing/pages/editarproductoPage.vue')},
   ]
 

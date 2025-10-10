@@ -1,15 +1,13 @@
 <template>
   <div class="min-h-screen w-full p-4 bg-gray-100 flex justify-center items-start">
     <div class="w-full max-w-[1700px] bg-white p-6 rounded shadow mt-8">
-      <!-- Título + Botón Agregar Cliente -->
+
+      <!-- Título + Botón Agregar Producto -->
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-2xl font-bold font-[Inter]">Catálogo</h2>
         <router-link to="/productos" class="btn btn-active btn-success">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-        </svg>
+          Agregar Producto
         </router-link>
-
       </div>
 
       <!-- Barra de búsqueda -->
@@ -33,8 +31,8 @@
           <!-- Imagen -->
           <div class="flex justify-center">
             <img
-              v-if="producto.imagen_final"
-              :src="producto.imagen_final"
+              v-if="producto.imagen_final_base64"
+              :src="`data:image/png;base64,${producto.imagen_final_base64}`"
               alt="Imagen producto"
               class="w-40 h-40 object-contain border rounded"
             />
@@ -53,7 +51,6 @@
             <span><strong>Producto:</strong> {{ producto.producto }}</span>
             <span><strong>Descripción:</strong> {{ producto.descripcion }}</span>
             <span><strong>Tipo:</strong> {{ producto.tipo }}</span>
-            <span><strong>Tipo Cartón:</strong> {{ producto.tipo_carton }}</span>
             <span>
               <strong>Dimensiones:</strong> {{ producto.ancho_int }} x {{ producto.largo_int }} x
               {{ producto.alto_int }}
@@ -72,7 +69,7 @@
             </button>
             <button
               class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600"
-              @click="eliminarProducto(producto.producto)"
+              @click="eliminarProducto(producto.identificador)"
             >
               Eliminar
             </button>
@@ -97,7 +94,7 @@ const loading = ref(true)
 // 🔹 Traer todos los productos desde la API
 onMounted(async () => {
   try {
-    const { data } = await axios.get('https://apisprueba.onrender.com/api/producto/catalogo')
+    const { data } = await axios.get('http://localhost:3000/api/producto/catalogo')
     productos.value = data
     console.log('Productos cargados:', productos.value)
   } catch (error) {
@@ -113,19 +110,30 @@ const productosFiltrados = computed(() =>
     (p) =>
       p.producto?.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       p.descripcion?.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      p.nombre_empresa?.toLowerCase().includes(searchQuery.value.toLowerCase()),
-  ),
+      p.nombre_empresa?.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
 )
 
-function editarProducto(identificador) {
-  router.push({ name: 'EditarProducto', params: { id: `${identificador}` } })
+// 🔹 Editar producto
+const editarProducto = (id) => {
+  if (!id) {
+    console.warn('Identificador inválido')
+    return
+  }
+  console.log('Navegando a editar producto con id:', id)
+  router.push({ name: 'EditarProducto', params: { id } })
 }
 
-// 🔹 Eliminar producto desde la API
-async function eliminarProducto(identificador) {
+
+const eliminarProducto = async (identificador) => {
+  if (!identificador) {
+    console.warn('Identificador inválido para eliminar')
+    return
+  }
   try {
-    await axios.delete(`https://apisprueba.onrender.com/api/productos/${identificador}`)
+    await axios.delete(`http://localhost:3000/api/productos/${identificador}`)
     productos.value = productos.value.filter((p) => p.identificador !== identificador)
+    console.log('Producto eliminado:', identificador)
   } catch (error) {
     console.error('Error al eliminar producto:', error)
   }

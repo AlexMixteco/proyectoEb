@@ -74,7 +74,7 @@
             Régimen fiscal
           </label>
           <select
-            required
+
             v-model="form.regimen"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
           >
@@ -101,7 +101,7 @@
             CFDI
           </label>
           <select
-            required
+
             v-model="form.cfdi"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
           >
@@ -209,7 +209,7 @@ const form = reactive({
 const cargarCliente = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`https://apisprueba.onrender.com/api/clientes/${id}`)
+    const res = await axios.get(`http://localhost:3000/api/clientes/${id}`)
 
     if (res.data && res.data.length > 0) {
       Object.assign(form, res.data[0])
@@ -225,7 +225,7 @@ const cargarCliente = async () => {
 
 const ActualizarCliente = async (json, num_cliente) => {
   try {
-    const res = await axios.put(`https://apisprueba.onrender.com/api/clientes/actualizar/${num_cliente}`, json)
+    const res = await axios.put(`http://localhost:3000/api/clientes/actualizar/${num_cliente}`, json)
     console.log("Cliente actualizado:", res.data)
     alert("Cliente actualizado correctamente")
     router.push('/clientes')

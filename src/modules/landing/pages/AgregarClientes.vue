@@ -45,7 +45,6 @@
           <input
             v-model="form.email"
             type="email"
-            required
             maxlength="50"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
           />
@@ -93,7 +92,6 @@
             Régimen fiscal
           </label>
           <select
-            required
             v-model="form.regimen"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
           >
@@ -121,7 +119,6 @@
             CFDI
           </label>
           <select
-            required
             v-model="form.cfdi"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 font-[Inter]"
           >
@@ -226,7 +223,7 @@ const form = reactive({
 
 const insertarCliente = async () => {
   try {
-    const response = await axios.post(' https://apisprueba.onrender.com/api/clientes/insertar', form)
+    const response = await axios.post('http://localhost:3000/api/clientes/insertar', form)
     console.log(response.data)
     Object.keys(form).forEach(key => form[key] = '')
     alert('Cliente insertado correctamente')
