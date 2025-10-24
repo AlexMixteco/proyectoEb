@@ -1,11 +1,38 @@
 <template>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75
+             0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75
+             0 0 0-1.06 1.06L6.97 11.03a.75.75
+             0 0 0 1.079-.02l3.992-4.99a.75.75
+             0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1
+             4.705c-.07.34.029.533.304.533.194 0
+             .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703
+             0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381
+             2.29-.287zM8 5.5a1 1 0 1 1 0-2
+             1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13
+             0 0 0-1.96 0L.165 13.233c-.457.778.091
+             1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982
+             1.566zM8 5c.535 0 .954.462.9.995l-.35
+             3.507a.552.552 0 0 1-1.1
+             0L7.1 5.995A.905.905 0 0 1 8
+             5zm.002 6a1 1 0 1 1 0
+             2 1 1 0 0 1 0-2z"/>
+  </symbol>
+  </svg>
   <form @submit.prevent="insertarProducto">
 
     <div class="min-h-screen w-full p-4 bg-gray-100 flex justify-center items-start">
 
       <div class="w-full max-w-[1700px] bg-white p-6 rounded shadow mt-8">
         <h2 class="font-bold mb-4 text-center text-lg">Agregar producto</h2>
-
+         <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
         <!-- Contenedor principal con flex -->
         <div class="flex items-start justify-between gap-4">
           <!-- Columna de inputs -->
@@ -94,13 +121,13 @@
                   />
                 </div>
 
-               <div class="table-cell p-1 border border-gray-300 rounded w-2/6">
+               <div class="table-cell p-1 border border-gray-300 rounded w-2/8">
                <div class="text-center text-xs font-semibold mb-1">Medidas internas</div>
                <div class="flex justify-between gap-2">
-               <input type="number" placeholder="Largo" class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.largoInt"/>
-               <input type="number" placeholder="Ancho" class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.anchoInt"/>
-               <input type="number" placeholder="Alto"  class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.altoInt"/>
-               <input type="number" placeholder="Ceja"  class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.ceja"/>
+               <input type="number" step="any" placeholder="Largo" class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.largoInt"/>
+               <input type="number" step="any" placeholder="Ancho" class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.anchoInt"/>
+               <input type="number" step="any" placeholder="Alto"  class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.altoInt"/>
+               <input type="number" step="any" placeholder="Ceja"  class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight" v-model="form.ceja"/>
                </div>
                </div>
 
@@ -109,8 +136,8 @@
             </div>
 
             <!-- Segunda fila -->
+            <!-- ================== Primera fila: Materiales ================== -->
 <div class="table w-full table-fixed border-separate border-spacing-2">
-  <!-- ================== Fila 1 ================== -->
   <div class="table-row">
     <!-- Materiales -->
     <div class="table-cell p-1 border border-gray-300 rounded w-[12%]">
@@ -141,7 +168,6 @@
         class="border border-gray-300 rounded-md px-2 py-1 h-8 text-sm w-full leading-tight"
       />
     </div>
-
 
     <!-- Material -->
     <div class="table-cell p-1 border border-gray-300 rounded w-[12%]">
@@ -215,137 +241,151 @@
       />
     </div>
   </div>
-
-<!-- ================== Fila 2 ================== -->
-<div class="table-row">
-  <!-- Dimensiones Cartón -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[25%]">
-    <div class="text-center text-xs font-semibold mb-1">Dimensiones Cartón</div>
-    <div class="flex justify-between gap-2">
-      <input
-        type="number"
-        v-model="form.largoCarton"
-        placeholder="largo"
-        class="border border-gray-300 rounded-md px-2 h-7 text-xs w-1/2 leading-tight"
-      />
-      <input
-        type="number"
-        v-model="form.anchoCarton"
-        placeholder="ancho"
-        class="border border-gray-300 rounded-md px-2 h-7 text-xs w-1/2 leading-tight"
-      />
-    </div>
-  </div>
-
-  <!-- Marcas -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[20%]">
-    <div class="text-center text-xs font-semibold mb-1">Marcas</div>
-    <input
-      type="text"
-      v-model="form.marcas"
-      placeholder="Marcas"
-      class="border border-gray-300 rounded-md px-2 h-7 text-sm w-full leading-tight"
-    />
-  </div>
-
-  <!-- Pegado -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[20%]">
-    <div class="text-center text-xs font-semibold mb-1">Pegado</div>
-    <input
-      type="text"
-      v-model="form.pegado"
-      placeholder="Pegado"
-      class="border border-gray-300 rounded-md px-2 h-7 text-sm w-full leading-tight"
-    />
-  </div>
-
-
-<!-- Tintas -->
-<div class="w-full mb-2">
-  <div class="text-center text-xs font-semibold mb-1">Tintas</div>
-
-  <div class="grid gap-2 w-full" style="grid-template-columns: repeat(4, minmax(180px, 1fr)) auto;">
-    <select v-model="tinta1" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full">
-      <option value="">Seleccionar tinta</option>
-      <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta" :title="`${t.gcmi} - ${t.nombre_tinta}`">
-        {{ t.gcmi }} - {{ t.nombre_tinta }}
-      </option>
-    </select>
-
-    <select v-model="tinta2" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full">
-      <option value="">Seleccionar tinta</option>
-      <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta" :title="`${t.gcmi} - ${t.nombre_tinta}`">
-        {{ t.gcmi }} - {{ t.nombre_tinta }}
-      </option>
-    </select>
-
-    <select v-model="tinta3" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full">
-      <option value="">Seleccionar tinta</option>
-      <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta" :title="`${t.gcmi} - ${t.nombre_tinta}`">
-        {{ t.gcmi }} - {{ t.nombre_tinta }}
-      </option>
-    </select>
-
-    <select v-model="tinta4" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full">
-      <option value="">Seleccionar tinta</option>
-      <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta" :title="`${t.gcmi} - ${t.nombre_tinta}`">
-        {{ t.gcmi }} - {{ t.nombre_tinta }}
-      </option>
-    </select>
-
-    <button type="button" @click="openModal" class="btn btn-active btn-success h-8 px-3">
-      +
-    </button>
-  </div>
 </div>
 
-
-
-
-    <!-- Modal -->
-    <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
-      <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <h3 class="text-lg font-semibold mb-4">Nueva tinta</h3>
-
-        <form @submit.prevent="guardarTinta" class="space-y-4">
-          <div>
-            <label for="gcmi" class="block mb-1 text-sm font-medium">GCMI</label>
-            <input
-              id="gcmi"
-              type="text"
-              v-model="gcmi"
-              placeholder="GCMI"
-              class="border border-gray-300 rounded-md px-2 h-7 w-full"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="nombre_tinta" class="block mb-1 text-sm font-medium">Nombre de la tinta</label>
-            <input
-              id="nombre_tinta"
-              type="text"
-              v-model="nombreTinta"
-              placeholder="Nombre de la tinta"
-              class="border border-gray-300 rounded-md px-2 h-7 w-full"
-              required
-            />
-          </div>
-
-          <div class="flex justify-end gap-2">
-            <button type="button" @click="closeModal" class="px-4 py-2 rounded border">Cancelar</button>
-            <button type="submit" class="px-4 py-2 rounded bg-blue-700 text-white hover:bg-blue-800">Guardar</button>
-          </div>
-        </form>
+<!-- ================== Segunda fila: Dimensiones y Tintas ================== -->
+<div class="table w-full table-fixed border-separate border-spacing-2 mt-2">
+  <div class="table-row">
+    <!-- Dimensiones Cartón -->
+    <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+      <div class="text-center text-xs font-semibold mb-1">Dimensiones Cartón</div>
+      <div class="flex justify-between gap-2">
+        <input
+          type="number"
+          v-model="form.largoCarton"
+          placeholder="largo"
+          class="border border-gray-300 rounded-md px-2 h-8 text-xs w-1/2 leading-tight"
+        />
+        <input
+          type="number"
+          v-model="form.anchoCarton"
+          placeholder="ancho"
+          class="border border-gray-300 rounded-md px-2 h-8 text-xs w-1/2 leading-tight"
+        />
       </div>
     </div>
 
+    <!-- Marcas -->
+    <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+      <div class="text-center text-xs font-semibold mb-1">Marcas</div>
+      <input
+        type="text"
+        v-model="form.marcas"
+        placeholder="Marcas"
+        class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full leading-tight"
+      />
+    </div>
+
+    <!-- Pegado -->
+
+    <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+      <div class="text-center text-xs font-semibold mb-1">Pegado</div>
+      <input
+        list="pegadoOptions"
+        v-model="form.pegado"
+        placeholder="Selecciona o escribe"
+        class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full leading-tight"
+      />
+      <datalist id="pegadoOptions">
+        <option value="Automático 1300"></option>
+        <option value="Manual"></option>
+        <option value="2 piezas manual"></option>
+      </datalist>
+    </div>
+
+
+    <!-- Tintas -->
+    <div class="table-cell p-1 border border-gray-300 rounded w-[35%]">
+      <div class="text-center text-xs font-semibold mb-1">Tintas</div>
+      <div class="flex gap-2">
+        <select v-model="tinta1" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
+          <option value="">Seleccionar tinta</option>
+          <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
+            {{ t.gcmi }} - {{ t.nombre_tinta }}
+          </option>
+        </select>
+
+        <select v-model="tinta2" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
+          <option value="">Seleccionar tinta</option>
+          <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
+            {{ t.gcmi }} - {{ t.nombre_tinta }}
+          </option>
+        </select>
+
+        <select v-model="tinta3" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
+          <option value="">Seleccionar tinta</option>
+          <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
+            {{ t.gcmi }} - {{ t.nombre_tinta }}
+          </option>
+        </select>
+
+        <select v-model="tinta4" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
+          <option value="">Seleccionar tinta</option>
+          <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
+            {{ t.gcmi }} - {{ t.nombre_tinta }}
+          </option>
+        </select>
+
+        <button type="button" @click="openModal" class="btn btn-active btn-success h-8 px-2 w-1/5">
+          +
+        </button>
+      </div>
+    </div>
+    <!-- Precio unitario -->
+<div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+  <div class="text-center text-xs font-semibold mb-1">Precio unitario</div>
+  <input
+    type="number"
+    step="0.01"
+    v-model.number="form.precio_unitario"
+    placeholder="Precio unitario"
+    class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full leading-tight"
+  />
+</div>
 
   </div>
 </div>
 
-<!--Aqui termina la segunda fila  -->
-</div>
+
+            <!--Aqui termina la segunda fila  -->
+             <!-- Modal -->
+            <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
+              <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <h3 class="text-lg font-semibold mb-4">Nueva tinta</h3>
+
+                <form @submit.prevent="guardarTinta" class="space-y-4">
+                  <div>
+                    <label for="gcmi" class="block mb-1 text-sm font-medium">GCMI</label>
+                    <input
+                      id="gcmi"
+                      type="text"
+                      v-model="gcmi"
+                      placeholder="GCMI"
+                      class="border border-gray-300 rounded-md px-2 h-7 w-full"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="nombre_tinta" class="block mb-1 text-sm font-medium">Nombre de la tinta</label>
+                    <input
+                      id="nombre_tinta"
+                      type="text"
+                      v-model="nombreTinta"
+                      placeholder="Nombre de la tinta"
+                      class="border border-gray-300 rounded-md px-2 h-7 w-full"
+                      required
+                    />
+                  </div>
+
+                  <div class="flex justify-end gap-2">
+                    <button type="button" @click="closeModal" class="px-4 py-2 rounded border">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-blue-700 text-white hover:bg-blue-800">Guardar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            </div>
 
     <!-- Contenedor de los inputs -->
     <div class="flex flex-col gap-4 w-[350px]">
@@ -357,12 +397,6 @@
 
       </div>
 
-      <!-- Identificador -->
-      <div class="table-cell p-1 border border-gray-300 rounded">
-        <label for="identificador" class="block text-sm font-medium text-gray-700">Identificador</label>
-        <input type="text" id="identificador" name="identificador" placeholder="Ingresa el ID" v-model="form.identificador"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
-      </div>
 
       <!-- Clave -->
       <div class="table-cell p-1 border border-gray-300 rounded">
@@ -375,11 +409,11 @@
       <div class="w-[200px] h-[200px] border border-gray-300 rounded flex justify-center items-center shadow-md relative mx-auto">
         <label
           class="flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden">
-          <span v-if="!imageData1" class="text-xs text-gray-500 text-center">Imagen final</span>
-          <img v-if="imageData1" :src="imageData1.preview" class="w-full h-full object-contain" />
-          <input type="file" accept="image/*" @change="onFileChange1" class="hidden" />
+          <span v-if="!imagenFinal" class="text-xs text-gray-500 text-center">Imagen final</span>
+          <img v-if="imagenFinal" :src="imagenFinal.vistaPrevia" class="w-full h-full object-contain" />
+          <input type="file" accept="image/*" @change="cargarImagenFinal" class="hidden" />
         </label>
-        <button v-if="imageData1" @click.prevent="removeImage1"
+        <button v-if="imagenFinal" @click.prevent="eliminarImagenFinal"
           class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded">X</button>
       </div>
     </div>
@@ -387,21 +421,19 @@
 
         </div>
 
-        <!-- Cajón Imagen 2 -->
+        <!-- Div de la imagen base -->
         <div class="flex justify-center mt-6">
-          <div
-            class="p-2 border border-b-black rounded flex justify-center items-center w-[620px] h-[420px] relative shadow-md"
-          >
+          <div class="p-2 border border-b-black rounded flex justify-center items-center w-[620px] h-[420px] relative shadow-md">
             <label
               class="flex items-center justify-center w-100 h-90 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
             >
-              <span v-if="!imageData2" class="text-xs text-gray-500 text-center">Imagen medidas</span>
-              <img v-if="imageData2" :src="imageData2.preview" class="w-full h-full object-contain" accept="image/*" />
-              <input type="file" accept="image/*" @change="onFileChange2" class="hidden" />
+              <span v-if="!imagenBase" class="text-xs text-gray-500 text-center">Imagen medidas</span>
+              <img v-if="imagenBase" :src="imagenBase.vistaPrevia" class="w-full h-full object-contain" accept="image/*" />
+              <input type="file" accept="image/*" @change="cargarImagenBase" class="hidden" />
             </label>
             <button
-              v-if="imageData2"
-              @click.prevent="removeImage2"
+              v-if="imagenBase"
+              @click.prevent="eliminarImagenBase"
               class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
             >
               X
@@ -434,13 +466,13 @@
       <label
         class="flex items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
       >
-        <span v-if="!imageData3" class="text-xs text-gray-500 text-center">Master gráfico</span>
-        <img v-if="imageData3" :src="imageData3.preview" class="w-full h-full object-contain" />
-        <input type="file" accept="image/*" @change="onFileChange3" class="hidden" />
+        <span v-if="!imagenGrabado" class="text-xs text-gray-500 text-center">Master gráfico</span>
+        <img v-if="imagenGrabado" :src="imagenGrabado.vistaPrevia" class="w-full h-full object-contain" />
+        <input type="file" accept="image/*" @change="cargarImagenGrabado" class="hidden" />
       </label>
       <button
-        v-if="imageData3"
-        @click.prevent="removeImage3"
+        v-if="imagenGrabado"
+        @click.prevent="eliminarImagenGrabado"
         class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
       >
         X
@@ -509,13 +541,13 @@
       <label
         class="flex items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
       >
-        <span v-if="!imageData4" class="text-xs text-gray-500 text-center">Imagen suaje</span>
-        <img v-if="imageData4" :src="imageData4.preview" class="w-full h-full object-contain" />
-        <input type="file" accept="image/*" @change="onFileChange4" class="hidden" />
+        <span v-if="!imagenSuaje" class="text-xs text-gray-500 text-center">Imagen suaje</span>
+        <img v-if="imagenSuaje" :src="imagenSuaje.vistaPrevia" class="w-full h-full object-contain" />
+        <input type="file" accept="image/*" @change="cargarImagenSuaje" class="hidden" />
       </label>
       <button
-        v-if="imageData4"
-        @click.prevent="removeImage4"
+        v-if="imagenSuaje"
+        @click.prevent="eliminarImagenSuaje"
         class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
       >
         X
@@ -551,7 +583,7 @@ const router = useRouter()
 const fechaActual = new Date().toISOString().substring(0, 10)
 
 const form = reactive({
-  identificador: '',
+
   grabado: '',
   num_cliente: '',
   clave_material: '',
@@ -574,9 +606,37 @@ const form = reactive({
   largo_suaje: '',
   corto_sep: '',
   largo_sep: '',
+  precio_unitario: '',
 });
 
+function mostrarAlerta(tipo, mensaje) {
+  const alertContainer = document.getElementById('alert-container');
+  const icono = {
+    success: '#check-circle-fill',
+    danger: '#exclamation-triangle-fill',
+    warning: '#exclamation-triangle-fill',
+    primary: '#info-fill'
+  }[tipo] || '#info-fill';
 
+  const alerta = document.createElement('div');
+  alerta.className = `alert alert-${tipo} d-flex align-items-center fade show shadow-sm`;
+  alerta.setAttribute('role', 'alert');
+  alerta.innerHTML = `
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+      <use xlink:href="${icono}"></use>
+    </svg>
+    <div>${mensaje}</div>
+  `;
+
+  alertContainer.appendChild(alerta);
+
+
+  setTimeout(() => {
+    alerta.classList.remove('show');
+    alerta.classList.add('fade');
+    setTimeout(() => alerta.remove(), 500);
+  }, 3000);
+}
 
 async function insertarProducto() {
 
@@ -596,32 +656,33 @@ async function insertarProducto() {
   formData.append('tintas', JSON.stringify(tintasArray));
 
   // Imágenes con nombres que reconoce el backend
-  if (imageData1.value?.valueFile) formData.append('imagenFinal', imageData1.value.valueFile);
-  if (imageData2.value?.valueFile) formData.append('imagenGrabado', imageData2.value.valueFile);
-  if (imageData3.value?.valueFile) formData.append('imagen', imageData3.value.valueFile);
-  if (imageData4.value?.valueFile) formData.append('imagenSuaje', imageData4.value.valueFile);
+  if (imagenFinalData.value?.valueFile) formData.append('imagenFinal', imagenFinalData.value.valueFile);
+  if (imagenBaseData.value?.valueFile) formData.append('imagen', imagenBaseData.value.valueFile);
+  if (imagenGrabadoData.value?.valueFile) formData.append('imagenGrabado', imagenGrabadoData.value.valueFile);
+  if (imagenSuajeData.value?.valueFile) formData.append('imagenSuaje', imagenSuajeData.value.valueFile);
 
   try {
     const response = await axios.post(
-      'https://apisprueba-s4hw.onrender.com/api/productos/insertar',
+      'https://apisprueba.onrender.com/api/productos/insertar',
       formData,
       { headers: { 'Content-Type': 'multipart/form-data' } }
     );
 
     if (response.data.message) {
-      alert('Producto insertado correctamente');
+      mostrarAlerta('success', 'Producto insertado correctamente');
       router.push('/catalogo');
     }
   } catch (error) {
     console.error('Error al insertar producto:', error);
-    alert('Error al insertar producto');
+    mostrarAlerta('danger', 'Error al insertar producto');
   }
 }
 
-const imageData1 = ref(null)
-const imageData2 = ref(null)
-const imageData3 = ref(null)
-const imageData4 = ref(null)
+const imagenFinalData = ref(null)
+const imagenBaseData = ref(null)
+const imagenGrabadoData = ref(null)
+const imagenSuajeData = ref(null)
+
 
 const isModalOpen = ref(false)
 const gcmi = ref('')
@@ -644,30 +705,41 @@ const closeModal = () => {
   nombreTinta.value = ''
 }
 
+const obtenerTintas = async () => {
+  try {
+    const res = await axios.get('https://apisprueba.onrender.com/api/tintas')
+    tintas.value = res.data
+  } catch (error) {
+    console.error('Error al obtener tintas:', error)
+  }
+}
 
 const guardarTinta = async () => {
   try {
-    const res = await axios.post('https://apisprueba-s4hw.onrender.com/api/tintas/insertar', {
+    const res = await axios.post('https://apisprueba.onrender.com/api/tintas/insertar', {
       gcmi: gcmi.value,
       nombre_tinta: nombreTinta.value
     })
 
+    // Agregar la tinta al listado
+    tintas.value.push(res.data[0]) // si tu endpoint devuelve un array de filas
 
-    tintas.value.push(res.data)
-
+    // Limpiar los inputs
+    gcmi.value = ''
+    nombreTinta.value = ''
 
     closeModal()
-    alert('Tinta guardada correctamente')
+    mostrarAlerta('success', 'Tinta guardada correctamente')
   } catch (err) {
     console.error(err)
-    alert('Error al guardar la tinta')
+    mostrarAlerta('danger', 'Error al guardar la tinta')
   }
 }
 
 // Función para traer clientes
 const obtenerClientes = async () => {
   try {
-    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/clientes')
+    const res = await axios.get('https://apisprueba.onrender.com/api/clientes')
     clientes.value = res.data
   } catch (error) {
     console.error('Error al obtener clientes:', error)
@@ -675,18 +747,10 @@ const obtenerClientes = async () => {
 }
 
 
-const obtenerTintas = async () => {
-  try {
-    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/tintas')
-    tintas.value = res.data
-  } catch (error) {
-    console.error('Error al obtener clientes:', error)
-  }
-}
 
 const obtenerMateriales = async () => {
   try {
-    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/materiales')
+    const res = await axios.get('https://apisprueba.onrender.com/api/materiales')
     materiales.value = res.data
     console.log('Materiales cargados:', materiales.value)
   } catch (error) {
@@ -745,73 +809,75 @@ onMounted(() => {
 
 
 
-function onFileChange1(event) {
-  const file = event.target.files[0]
-  if (!file) return
+function cargarImagenFinal(event) {
+  const archivo = event.target.files[0]
+  if (!archivo) return
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageData1.value = {
-      preview: reader.result,
-      valueFile: file
+  const lector = new FileReader()
+  lector.onload = () => {
+    imagenFinalData.value = {
+      vistaPrevia: lector.result,
+      archivo
     }
   }
-  reader.readAsDataURL(file)
+  lector.readAsDataURL(archivo)
 }
 
-function onFileChange2(event) {
-  const file = event.target.files[0]
-  if (!file) return
+function cargarImagenBase(event) {
+  const archivo = event.target.files[0]
+  if (!archivo) return
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageData2.value = {
-      preview: reader.result,
-      valueFile: file
+  const lector = new FileReader()
+  lector.onload = () => {
+    imagenBaseData.value = {
+      vistaPrevia: lector.result,
+      archivo
     }
   }
-  reader.readAsDataURL(file)
+  lector.readAsDataURL(archivo)
 }
 
-function onFileChange3(event) {
-  const file = event.target.files[0]
-  if (!file) return
+function cargarImagenGrabado(event) {
+  const archivo = event.target.files[0]
+  if (!archivo) return
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageData3.value = {
-      preview: reader.result,
-      valueFile: file
+  const lector = new FileReader()
+  lector.onload = () => {
+    imagenGrabadoData.value = {
+      vistaPrevia: lector.result,
+      archivo
     }
   }
-  reader.readAsDataURL(file)
+  lector.readAsDataURL(archivo)
 }
 
-function onFileChange4(event) {
-  const file = event.target.files[0]
-  if (!file) return
+function cargarImagenSuaje(event) {
+  const archivo = event.target.files[0]
+  if (!archivo) return
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageData4.value = {
-      preview: reader.result,
-      valueFile: file
+  const lector = new FileReader()
+  lector.onload = () => {
+    imagenSuajeData.value = {
+      vistaPrevia: lector.result,
+      archivo
     }
   }
-  reader.readAsDataURL(file)
+  lector.readAsDataURL(archivo)
 }
 
-function removeImage1() {
-  imageData1.value = null
+
+function eliminarImagenFinal() {
+  imagenFinalData.value = null
 }
-function removeImage2() {
-  imageData2.value = null
+function eliminarImagenBase() {
+  imagenBaseData.value = null
 }
-function removeImage3() {
-  imageData3.value = null
+function eliminarImagenGrabado() {
+  imagenGrabadoData.value = null
 }
-function removeImage4() {
-  imageData4.value = null
+function eliminarImagenSuaje() {
+  imagenSuajeData.value = null
 }
+
 
 </script>

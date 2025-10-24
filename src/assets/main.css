@@ -10,4 +10,49 @@ body, label, input, select, textarea, h2 {
   font-family: 'Inter', sans-serif;
 }
 
+/* 🎨 ===== ALERTAS CON DEGRADADOS GLOBALES ===== */
 
+/* Estilo base para todas las alertas */
+.alert {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.75rem 1rem;
+  color: white;
+  border: none;
+}
+
+
+.alert-success {
+  background: linear-gradient(135deg, #a8e6cf, #56ab2f) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #ff6b6b, #c0392b) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, #ffd86f, #fc4a1a) !important;
+  color: #333 !important;
+  border: none !important;
+}
+
+.alert-info,
+.alert-primary {
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5) !important;
+  color: white !important;
+  border: none !important;
+}
+
+
+.campo-obligatorio {
+  border: 2px solid red !important;
+  background-color: #ffe6e6;
+}

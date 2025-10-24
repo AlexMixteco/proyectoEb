@@ -39,7 +39,7 @@ const proveedores = ref([])
 const obtenerProveedores = async () => {
   const options = {
     method: 'GET',
-    url: 'https://apisprueba-s4hw.onrender.com/api/buscarTabla/proveedores',
+    url: 'https://apisprueba.onrender.com/api/buscarTabla/proveedores',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -60,7 +60,7 @@ const borrarProveedor = async (idproveedores) => {
   console.log('Eliminando proveedor:', idproveedores)
   const options = {
     method: 'DELETE',
-    url: `https://apisprueba-s4hw.onrender.com/api/proveedores/borrar/${idproveedores}`,
+    url: `https://apisprueba.onrender.com/api/proveedores/borrar/${idproveedores}`,
     headers: {
       'Content-Type': 'application/json',
     },

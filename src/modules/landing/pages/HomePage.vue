@@ -12,7 +12,7 @@
         <p class="text-center mt-2 font-semibold">Cotizaciones</p>
       </router-link>
 
-      <router-link to="/pedidos" class="group flex flex-col items-center">
+      <router-link to="/pedidosManual" class="group flex flex-col items-center">
         <img
           src="@/assets/pedidos.png"
           alt="Pedidos"
@@ -46,6 +46,15 @@
           class="w-24 md:w-32 h-24 md:h-32 object-contain cursor-pointer transform transition duration-300 group-hover:scale-110 group-hover:shadow-lg"
         />
         <p class="text-center mt-2 font-semibold">Proveedores</p>
+      </router-link>
+
+      <router-link to="/Configuraciones" class="group flex flex-col items-center">
+        <img
+          src="@/assets/configuraciones.png"
+          alt="Configuraciones"
+          class="w-24 md:w-32 h-24 md:h-32 object-contain cursor-pointer transform transition duration-300 group-hover:scale-110 group-hover:shadow-lg"
+        />
+        <p class="text-center mt-2 font-semibold">Configuraciones</p>
       </router-link>
 
     </div>

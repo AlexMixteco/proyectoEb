@@ -17,15 +17,17 @@ const router = createRouter({
     {path: '/proveedores', name: 'proveedores', component: () => import('@/modules/landing/pages/ProveedoresPage.vue')},
     {path: '/AgregarProveedor', name: 'AgregarProveedor', component: () => import('@/modules/landing/pages/AgregarProveedores.vue')},
     {path: '/EditarProveedor/:id', name: 'EditarProveedor', component: () => import('@/modules/landing/pages/EditarProveedores.vue')},
-    {path: '/pedidos', name: 'pedidos', component: () => import('@/modules/landing/pages/pedidosPage.vue')},
+    {path: '/pedidos/:id', name: 'pedidos', component: () => import('@/modules/landing/pages/pedidosPage.vue')},
+    {path: '/pedidosManual', name: 'pedidosManual', component: () => import('@/modules/landing/pages/pedidosManual.vue')},
     {path: '/productos', name: 'productos', component: () => import('@/modules/landing/pages/productosPage.vue')},
     {path: '/catalogo', name: 'catalogo', component: () => import('@/modules/landing/pages/catalogoPage.vue')},
     {path: '/ordenP',name: 'ordenP',component: () => import('@/modules/landing/pages/ordenpPage.vue') },
     {path: '/editarProductos/:id',name: 'EditarProducto',component: () => import('@/modules/landing/pages/editarproductoPage.vue')},
+    {path: '/configuraciones',name: 'configuraciones',component: () => import('@/modules/landing/pages/ConfiguracionesPage.vue')},
+    {path: 'listaCotizaciones', name: 'listaCotizaciones', component: () => import('@/modules/landing/pages/ListaCotizaciones.vue')},
   ]
 
     },
-
 
     // Auth
     {

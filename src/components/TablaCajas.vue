@@ -45,7 +45,7 @@
 
 <script setup>
 const { encabezado, info, claves } = defineProps(['encabezado', 'info', 'claves'])
-const emit = defineEmits(['eliminar', 'editar'])
+const emit = defineEmits(['editar'])
 
 
 const editar = (inf) => emit('editar', inf)

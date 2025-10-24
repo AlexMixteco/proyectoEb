@@ -1,9 +1,36 @@
 <template>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75
+             0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75
+             0 0 0-1.06 1.06L6.97 11.03a.75.75
+             0 0 0 1.079-.02l3.992-4.99a.75.75
+             0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1
+             4.705c-.07.34.029.533.304.533.194 0
+             .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703
+             0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381
+             2.29-.287zM8 5.5a1 1 0 1 1 0-2
+             1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13
+             0 0 0-1.96 0L.165 13.233c-.457.778.091
+             1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982
+             1.566zM8 5c.535 0 .954.462.9.995l-.35
+             3.507a.552.552 0 0 1-1.1
+             0L7.1 5.995A.905.905 0 0 1 8
+             5zm.002 6a1 1 0 1 1 0
+             2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
   <form @submit.prevent="guardarCambios">
     <div class="min-h-screen w-full p-4 bg-gray-100 flex justify-center items-start">
       <div class="w-full max-w-[1700px] bg-white p-6 rounded shadow mt-8">
         <h2 class="font-bold mb-4 text-center text-lg">Editar producto</h2>
-
+        <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
         <!-- Contenedor principal con flex -->
         <div class="flex items-start justify-between gap-4">
           <!-- Columna de inputs -->
@@ -69,19 +96,20 @@
                <div class="text-center text-xs font-semibold mb-1">Medidas internas</div>
                <div class="flex justify-between gap-2">
                <div class="flex justify-between gap-2">
-  <input
+
+                 <input
     type="number"
     step="any"
-    placeholder="Ancho"
-    v-model.number="form.ancho_int"
+    placeholder="Largo"
+    v-model="form.largo_int"
     class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight"
   />
 
   <input
     type="number"
     step="any"
-    placeholder="Largo"
-    v-model="form.largo_int"
+    placeholder="Ancho"
+    v-model.number="form.ancho_int"
     class="border border-gray-300 rounded-md px-2 py-1 h-8 text-xs w-1/4 leading-tight"
   />
 
@@ -216,30 +244,34 @@
       />
     </div>
   </div>
-
+</div>
 <!-- ================== Fila 2 ================== -->
-<div class="table-row">
+  <div class="table w-full table-fixed border-separate border-spacing-2 mt-2">
+    <div class="table-row">
   <!-- Dimensiones Cartón -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[25%]">
+  <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
     <div class="text-center text-xs font-semibold mb-1">Dimensiones Cartón</div>
     <div class="flex justify-between gap-2">
       <input
         type="number"
-        v-model="form.ancho_carton"
-        placeholder="Ancho"
-        class="border border-gray-300 rounded-md px-2 h-7 text-xs w-1/2 leading-tight"
-      />
-      <input
-        type="number"
+        step="any"
         v-model="form.largo_carton"
         placeholder="Largo"
         class="border border-gray-300 rounded-md px-2 h-7 text-xs w-1/2 leading-tight"
       />
+      <input
+        type="number"
+        step="any"
+        v-model="form.ancho_carton"
+        placeholder="Ancho"
+        class="border border-gray-300 rounded-md px-2 h-7 text-xs w-1/2 leading-tight"
+      />
+
     </div>
   </div>
 
   <!-- Marcas -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[20%]">
+  <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
     <div class="text-center text-xs font-semibold mb-1">Marcas</div>
     <input
       type="text"
@@ -250,44 +282,48 @@
   </div>
 
   <!-- Pegado -->
-  <div class="table-cell p-1 border border-gray-300 rounded w-[20%]">
-    <div class="text-center text-xs font-semibold mb-1">Pegado</div>
-    <input
-      type="text"
-      v-model="form.pegado"
-      placeholder="Pegado"
-      class="border border-gray-300 rounded-md px-2 h-7 text-sm w-full leading-tight"
-    />
-  </div>
+  <div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+      <div class="text-center text-xs font-semibold mb-1">Pegado</div>
+      <input
+        list="pegadoOptions"
+        v-model="form.pegado"
+        placeholder="Selecciona o escribe"
+        class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full leading-tight"
+      />
+      <datalist id="pegadoOptions">
+        <option value="Automático 1300"></option>
+        <option value="Manual"></option>
+        <option value="2 piezas manual"></option>
+      </datalist>
+    </div>
 
 
 <!-- Tintas -->
-<div class="table-cell p-1 border border-gray-300 rounded align-top w-full">
+<div class="table-cell p-1 border border-gray-300 rounded w-[35%]">
   <div class="text-center text-xs font-semibold mb-1">Tintas</div>
-
-  <div class="flex gap-2 w-full">
-    <select v-model="tinta1" class="border border-gray-300 rounded-md px-2 h-8 text-sm flex-[1_1_0] min-w-[130px]">
+  <div class="flex gap-2">
+    <select v-model="tinta1" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
       <option value="">Seleccionar tinta</option>
       <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
         {{ t.gcmi }} - {{ t.nombre_tinta }}
       </option>
     </select>
 
-    <select v-model="tinta2" class="border border-gray-300 rounded-md px-2 h-8 text-sm flex-[1_1_0] min-w-[130px]">
+    <select v-model="tinta2" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
       <option value="">Seleccionar tinta</option>
       <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
         {{ t.gcmi }} - {{ t.nombre_tinta }}
       </option>
     </select>
 
-    <select v-model="tinta3" class="border border-gray-300 rounded-md px-2 h-8 text-sm flex-[1_1_0] min-w-[130px]">
+    <select v-model="tinta3" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
       <option value="">Seleccionar tinta</option>
       <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
         {{ t.gcmi }} - {{ t.nombre_tinta }}
       </option>
     </select>
 
-    <select v-model="tinta4" class="border border-gray-300 rounded-md px-2 h-8 text-sm flex-[1_1_0] min-w-[130px]">
+    <select v-model="tinta4" class="border border-gray-300 rounded-md px-2 h-8 text-sm w-1/5">
       <option value="">Seleccionar tinta</option>
       <option v-for="t in tintas" :key="t.id_tinta" :value="t.id_tinta">
         {{ t.gcmi }} - {{ t.nombre_tinta }}
@@ -300,10 +336,27 @@
   </div>
 </div>
 
+<!-- Precio unitario -->
+<div class="table-cell p-1 border border-gray-300 rounded w-[10%]">
+  <div class="text-center text-xs font-semibold mb-1">Precio unitario</div>
+  <input
+    type="number"
+    step="0.01"
+    v-model.number="form.precio_unitario"
+    placeholder="Precio unitario"
+    class="border border-gray-300 rounded-md px-2 h-8 text-sm w-full leading-tight"
+  />
+</div>
+
+  </div>
+  </div>
 
 
 
-    <!-- Modal -->
+
+
+<!--Aqui termina la segunda fila  -->
+<!-- Modal -->
     <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
       <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
         <h3 class="text-lg font-semibold mb-4">Nueva tinta</h3>
@@ -340,34 +393,26 @@
         </form>
       </div>
     </div>
-  </div>
 
-
-</div>
-
-<!--Aqui termina la segunda fila  -->
-</div>
-
-    <!-- Contenedor de los inputs -->
-    <div class="flex flex-col gap-4 w-[350px]">
-
-
-
+        </div>
+        <!-- Contenedor de los inputs -->
+        <div class="flex flex-col gap-4 w-[350px]">
       <!-- Imagen 1 -->
       <div class="w-[200px] h-[200px] border border-gray-300 rounded flex justify-center items-center shadow-md relative mx-auto">
         <label
           class="flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden">
-          <span v-if="!imageData1" class="text-xs text-gray-500 text-center">Imagen 1</span>
-          <img v-if="imageData1" :src="imageData1.preview" class="w-full h-full object-contain" />
-          <input type="file" accept="image/*" @change="onFileChange1" class="hidden" />
+          <span v-if="!imagenFinalData" class="text-xs text-gray-500 text-center">Imagen final</span>
+          <img v-if="imagenFinalData" :src="imagenFinalData.preview" class="w-full h-full object-contain" />
+          <input type="file" accept="image/*" @change="cargarImagenFinal" class="hidden" />
         </label>
-        <button v-if="imageData1" @click.prevent="removeImage1"
+        <button v-if="imagenFinalData" @click.prevent="removeImagenFinal"
           class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded">X</button>
       </div>
-    </div>
+        </div>
 
 
         </div>
+
 
         <!-- Cajón Imagen 2 -->
         <div class="flex justify-center mt-6">
@@ -377,13 +422,13 @@
             <label
               class="flex items-center justify-center w-100 h-90 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
             >
-              <span v-if="!imageData2" class="text-xs text-gray-500 text-center">Imagen 2</span>
-              <img v-if="imageData2" :src="imageData2.preview" class="w-full h-full object-contain" accept="image/*" />
-              <input type="file" accept="image/*" @change="onFileChange2" class="hidden" />
+              <span v-if="!imagenBaseData" class="text-xs text-gray-500 text-center">Imagen medidas</span>
+              <img v-if="imagenBaseData" :src="imagenBaseData.preview" class="w-full h-full object-contain" accept="image/*" />
+              <input type="file" accept="image/*" @change="cargarImagenBase" class="hidden" />
             </label>
             <button
-              v-if="imageData2"
-              @click.prevent="removeImage2"
+              v-if="imagenBaseData"
+              @click.prevent="removeImagenBase"
               class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
             >
               X
@@ -416,13 +461,13 @@
       <label
         class="flex items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
       >
-        <span v-if="!imageData4" class="text-xs text-gray-500 text-center">Imagen 3</span>
-        <img v-if="imageData4" :src="imageData4.preview" class="w-full h-full object-contain" />
-        <input type="file" accept="image/*" @change="onFileChange4" class="hidden" />
+        <span v-if="!imagenGrabadoData" class="text-xs text-gray-500 text-center">Master gráfico</span>
+        <img v-if="imagenGrabadoData" :src="imagenGrabadoData.preview" class="w-full h-full object-contain" />
+        <input type="file" accept="image/*" @change="cargarImagenGrabado" class="hidden" />
       </label>
       <button
-        v-if="imageData4"
-        @click.prevent="removeImage4"
+        v-if="imagenGrabadoData"
+        @click.prevent="removeImagenGrabado"
         class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
       >
         X
@@ -491,13 +536,13 @@
       <label
         class="flex items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-gray-500 overflow-hidden"
       >
-        <span v-if="!imageData3" class="text-xs text-gray-500 text-center">Imagen 4</span>
-        <img v-if="imageData3" :src="imageData3.preview" class="w-full h-full object-contain" />
-        <input type="file" accept="image/*" @change="onFileChange3" class="hidden" />
+        <span v-if="!imagenSuajeData" class="text-xs text-gray-500 text-center">Imagen suaje</span>
+        <img v-if="imagenSuajeData" :src="imagenSuajeData.preview" class="w-full h-full object-contain" />
+        <input type="file" accept="image/*" @change="cargarImagenSuaje" class="hidden" />
       </label>
       <button
-        v-if="imageData3"
-        @click.prevent="removeImage3"
+        v-if="imagenSuajeData"
+        @click.prevent="removeImagenSuaje"
         class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
       >
         X
@@ -550,14 +595,16 @@ const form = reactive({
   largo_suaje: '',
   corto_sep: '',
   largo_sep: '',
-  identificador: ''
+  identificador: '',
+  precio_unitario: ''
 })
 
 // Imágenes
-const imageData1 = ref(null)
-const imageData2 = ref(null)
-const imageData3 = ref(null)
-const imageData4 = ref(null)
+const imagenFinalData = ref(null)
+const imagenBaseData = ref(null)
+const imagenGrabadoData = ref(null)
+const imagenSuajeData = ref(null)
+
 
 // Material seleccionado
 const selectedMaterial = ref('')
@@ -573,6 +620,35 @@ const isModalOpen = ref(false)
 const gcmi = ref('')
 const nombreTinta = ref('')
 
+function mostrarAlerta(tipo, mensaje) {
+  const alertContainer = document.getElementById('alert-container');
+  const icono = {
+    success: '#check-circle-fill',
+    danger: '#exclamation-triangle-fill',
+    warning: '#exclamation-triangle-fill',
+    primary: '#info-fill'
+  }[tipo] || '#info-fill';
+
+  const alerta = document.createElement('div');
+  alerta.className = `alert alert-${tipo} d-flex align-items-center fade show shadow-sm`;
+  alerta.setAttribute('role', 'alert');
+  alerta.innerHTML = `
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+      <use xlink:href="${icono}"></use>
+    </svg>
+    <div>${mensaje}</div>
+  `;
+
+  alertContainer.appendChild(alerta);
+
+
+  setTimeout(() => {
+    alerta.classList.remove('show');
+    alerta.classList.add('fade');
+    setTimeout(() => alerta.remove(), 500);
+  }, 3000);
+}
+
 
 
 const openModal = () => { isModalOpen.value = true }
@@ -584,21 +660,31 @@ const closeModal = () => {
 
 
 const guardarTinta = async () => {
+  if (!gcmi.value || !nombreTinta.value) {
+    mostrarAlerta('warning', 'Completa todos los campos')
+    return
+  }
+
   try {
-    const res = await axios.post('https://apisprueba-s4hw.onrender.com/api/tintas/insertar', {
+    const res = await axios.post('https://apisprueba.onrender.com/api/tintas/insertar', {
       gcmi: gcmi.value,
       nombre_tinta: nombreTinta.value
     })
 
+    const nuevaTinta = Array.isArray(res.data) ? res.data[0] : res.data
+    tintas.value.push(nuevaTinta) // se refleja automáticamente en los <select>
 
-    tintas.value.push(res.data)
+    // Limpiar campos
+    gcmi.value = ''
+    nombreTinta.value = ''
 
+    // Cerrar modal
+     closeModal()
 
-    closeModal()
-    alert('Tinta guardada correctamente')
+    mostrarAlerta('success', 'Tinta guardada correctamente')
   } catch (err) {
-    console.error(err)
-    alert('Error al guardar la tinta')
+    console.error('Error al guardar la tinta:', err.response?.data || err)
+    mostrarAlerta('danger', 'Error al guardar la tinta')
   }
 }
 
@@ -607,7 +693,7 @@ const guardarTinta = async () => {
 const cargarProducto = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`https://apisprueba-s4hw.onrender.com/api/productos/${id}`)
+    const res = await axios.get(`https://apisprueba.onrender.com/api/productos/${id}`)
 
     if (res.data && res.data.length > 0) {
       const producto = res.data[0]
@@ -615,11 +701,11 @@ const cargarProducto = async () => {
       form.identificador = producto.identificador
       selectedMaterial.value = producto.clave_material || ''
 
-      // Cargar imágenes existentes
-      if (producto.imagen1) imageData1.value = { preview: `data:image/jpeg;base64,${producto.imagen1}`, file: null }
-      if (producto.imagen2) imageData2.value = { preview: `data:image/jpeg;base64,${producto.imagen2}`, file: null }
-      if (producto.imagen3) imageData3.value = { preview: `data:image/jpeg;base64,${producto.imagen3}`, file: null }
-      if (producto.imagen4) imageData4.value = { preview: `data:image/jpeg;base64,${producto.imagen4}`, file: null }
+
+      if (producto.imagenFinal) imagenFinalData.value = { preview: `data:image/jpeg;base64,${producto.imagenFinal}`, file: null }
+      if (producto.imagenGrabado) imagenGrabadoData.value = { preview: `data:image/jpeg;base64,${producto.imagenGrabado}`, file: null }
+      if (producto.imagenBase) imagenBaseData.value = { preview: `data:image/jpeg;base64,${producto.imagenBase}`, file: null }
+      if (producto.imagenSuaje) imagenSuajeData.value = { preview: `data:image/jpeg;base64,${producto.imagenSuaje}`, file: null }
     } else {
       console.warn('No se encontró el producto con ese número')
     }
@@ -631,7 +717,7 @@ const cargarProducto = async () => {
 // Obtener tintas
 const obtenerTintas = async () => {
   try {
-    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/tintas')
+    const res = await axios.get('https://apisprueba.onrender.com/api/tintas')
     tintas.value = res.data
   } catch (error) {
     console.error('Error al obtener tintas:', error)
@@ -642,7 +728,7 @@ const obtenerTintas = async () => {
 const cargarProductoTintas = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`hhttps://apisprueba-s4hw.onrender.com/api/productos/tintas/${id}`)
+    const res = await axios.get(`https://apisprueba.onrender.com/api/productos/tintas/${id}`)
     if (res.data && res.data.length > 0) {
       const tintasProducto = res.data.slice(0, 4)
       tinta1.value = tintasProducto[0]?.id_tinta || ''
@@ -677,10 +763,10 @@ const ActualizarProducto = async () => {
     if (tintasArray.length > 0) formData.append('tintas', JSON.stringify(tintasArray));
 
     // Imágenes: solo enviar si se cargan nuevas
-    if (imageData1.value?.file) formData.append('imagenFinal', imageData1.value.file);
-    if (imageData2.value?.file) formData.append('imagenGrabado', imageData2.value.file);
-    if (imageData3.value?.file) formData.append('imagen', imageData3.value.file);
-    if (imageData4.value?.file) formData.append('imagenSuaje', imageData4.value.file);
+    if (imagenFinalData.value?.file) formData.append('imagenFinal', imagenFinalData.value.file);
+    if (imagenBaseData.value?.file) formData.append('imagenBase', imagenBaseData.value.file);
+    if (imagenGrabadoData.value?.file) formData.append('imagenGrabado', imagenGrabadoData.value.file);
+    if (imagenSuajeData.value?.file) formData.append('imagenSuaje', imagenSuajeData.value.file);
 
     // Debug: ver qué se va a enviar
     // for (let [key, value] of formData.entries()) {
@@ -689,17 +775,17 @@ const ActualizarProducto = async () => {
 
     // Llamada PUT al backend
     const res = await axios.put(
-      `http://localhost:3000/api/productos/actualizar/${identificador}`,
+      `https://apisprueba.onrender.com/api/productos/actualizar/${identificador}`,
       formData,
       { headers: { 'Content-Type': 'multipart/form-data' } }
     );
 
-    alert(res.data.message || 'Producto actualizado correctamente');
+    mostrarAlerta('success', res.data.message || 'Producto actualizado correctamente');
     router.push('/catalogo');
 
   } catch (error) {
     console.error('Error al actualizar producto:', error);
-    alert('Error al actualizar producto, revisa la consola');
+    mostrarAlerta('danger', 'Error al actualizar producto, revisa la consola');
   }
 };
 
@@ -710,7 +796,7 @@ const ActualizarProducto = async () => {
 // Obtener materiales
 const obtenerMateriales = async () => {
   try {
-    const res = await axios.get('https://apisprueba-s4hw.onrender.com/api/materiales')
+    const res = await axios.get('https://apisprueba.onrender.com/api/materiales')
     materiales.value = res.data
   } catch (error) {
     console.error('Error al obtener materiales:', error)
@@ -739,17 +825,17 @@ const handleFileChange = (event, imageRef) => {
 }
 
 // Mapear eventos a cada input
-const onFileChange1 = event => handleFileChange(event, imageData1)
-const onFileChange2 = event => handleFileChange(event, imageData2)
-const onFileChange3 = event => handleFileChange(event, imageData3)
-const onFileChange4 = event => handleFileChange(event, imageData4)
+const cargarImagenFinal = event => handleFileChange(event, imagenFinalData)
+const cargarImagenBase = event => handleFileChange(event, imagenBaseData)
+const cargarImagenGrabado = event => handleFileChange(event, imagenGrabadoData)
+const cargarImagenSuaje = event => handleFileChange(event, imagenSuajeData)
 
 
 // Quitar imágenes
-const removeImage1 = () => imageData1.value = null
-const removeImage2 = () => imageData2.value = null
-const removeImage3 = () => imageData3.value = null
-const removeImage4 = () => imageData4.value = null
+const removeImagenFinal = () => imagenFinalData.value = null
+const removeImagenBase = () => imagenBaseData.value = null
+const removeImagenGrabado = () => imagenGrabadoData.value = null
+const removeImagenSuaje = () => imagenSuajeData.value = null
 
 // Guardar cambios
 const guardarCambios = async () => {
